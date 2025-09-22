@@ -6,7 +6,7 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 13:17:14 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/21 15:45:03 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/09/22 19:51:06 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,13 @@ typedef struct s_point_2d
 	int				y;
 	t_color_type	color;
 }					t_point_2d;
+
+typedef struct s_point_3d
+{
+	int				x;
+	int				y;
+	int				z;
+}					t_point_3d;
 
 typedef struct s_point
 {

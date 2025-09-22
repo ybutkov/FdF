@@ -6,7 +6,7 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 13:18:38 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/22 14:28:16 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/09/22 20:22:35 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,96 @@ void	print_map(t_map *map)
 	}
 }
 
-t_point_2d	project_iso(t_map *map, int x, int y)
+// t_point_2d	project_iso(t_map *map, int x, int y)
+// {
+// 	t_point		*point;
+// 	t_point_2d	result;
+// 	float		angle;
+
+// 	angle = 0.523599;
+// 	point = map->get_point(map, x, y);
+// 	if (!point)
+// 		return ((t_point_2d){0, 0, 0});
+// 	result.x = (x - y) * cos(angle) * map->zoom + map->offset_x;
+// 	result.y = (x + y) * sin(angle) * map->zoom - point->z * map->z_scale
+// 		* map->zoom + map->offset_y;
+// 	result.color = point->color;
+// 	return (result);
+// }
+
+t_point_2d iso_project(t_point_3d point)
 {
-	t_point		*point;
 	t_point_2d	result;
 	float		angle;
 
-	angle = 0.523599;
-	point = map->get_point(map, x, y);
-	if (!point)
-		return ((t_point_2d){0, 0, 0});
-	result.x = (x - y) * cos(angle) * map->zoom + map->offset_x;
-	result.y = (x + y) * sin(angle) * map->zoom - point->z * map->z_scale
-		* map->zoom + map->offset_y;
-	result.color = point->color;
+	angle = 0.523599; // 30 градусов в радианах
+	result.x = (point.x - point.y) * cos(angle);
+	result.y = (point.x + point.y) * sin(angle) - point.z;
+	return (result);
+}
+
+void rotate_x(t_point_3d *point, float angle)
+{
+	float	y;
+	float	z;
+	float	cos_angle;
+	float	sin_angle;
+
+	cos_angle = cos(angle);
+	sin_angle = sin(angle);
+	y = point->y * cos_angle - point->z * sin_angle;
+	z = point->y * sin_angle + point->z * cos_angle;
+	point->y = y;
+	point->z = z;
+}
+
+void rotate_y(t_point_3d *point, float angle)
+{
+	float	x;
+	float	z;
+	float	cos_angle;
+	float	sin_angle;
+
+	cos_angle = cos(angle);
+	sin_angle = sin(angle);
+	x = point->x * cos_angle + point->z * sin_angle;
+	z = -point->x * sin_angle + point->z * cos_angle;
+	point->x = x;
+	point->z = z;
+}
+
+void rotate_z(t_point_3d *point, float angle)
+{
+	float	x;
+	float	y;
+	float	cos_angle;
+	float	sin_angle;
+
+	cos_angle = cos(angle);
+	sin_angle = sin(angle);
+	x = point->x * cos_angle - point->y * sin_angle;
+	y = point->x * sin_angle + point->y * cos_angle;
+	point->x = x;
+	point->y = y;
+}
+
+t_point_2d	transform_point(t_map *map, int x, int y)
+{
+	t_point_2d	result;
+	t_point_3d point_3d;
+
+	point_3d.x = x * map->zoom;
+	point_3d.y = y * map->zoom;
+	point_3d.z = map->get_point(map, x, y)->z * map->z_scale;
+
+	rotate_x(&point_3d, map->rotation_x);
+	rotate_y(&point_3d, map->rotation_y);
+	rotate_z(&point_3d, map->rotation_z);
+
+	result = iso_project(point_3d);
+	result.x = result.x + map->offset_x;
+	result.y = result.y + map->offset_y;
+	result.color = map->get_point(map, x, y)->color;
 	return (result);
 }
 
@@ -93,18 +169,21 @@ void	render_map(t_app *app)
 	for (int y = 0; y < map->height; y++)
 		for (int x = 0; x < map->width; x++)
 		{
-			from = project_iso(map, x, y);
+			// from = project_iso(map, x, y);
+			from = transform_point(map, x, y);
 			if (x + 1 < map->width)
 			{
-				right = project_iso(map, x + 1, y);
+				// right = project_iso(map, x + 1, y);
+				right = transform_point(map, x + 1, y);
 				draw_line(app->img, (t_point_2d){from.x, from.y, from.color},
-					(t_point_2d){right.x, right.y, right.color});
+					(t_point_2d){right.x, right.y, (from.color + right.color) / 2});
 			}
 			if (y + 1 < map->height)
 			{
-				bottom = project_iso(map, x, y + 1);
+				// bottom = project_iso(map, x, y + 1);
+				bottom = transform_point(map, x, y + 1);
 				draw_line(app->img, (t_point_2d){from.x, from.y, from.color},
-					(t_point_2d){bottom.x, bottom.y, bottom.color});
+					(t_point_2d){bottom.x, bottom.y, (from.color + bottom.color) / 2});
 			}
 		}
 	mlx_put_image_to_window(app->mlx, app->win, app->img->img, 0, 0);

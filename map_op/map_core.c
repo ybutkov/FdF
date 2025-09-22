@@ -6,7 +6,7 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 13:03:00 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/22 13:53:29 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/09/22 19:59:00 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static void	reset_map_transformations(t_map *map)
 	map->zoom = 1.0f;
 	map->rotation_x = 0.0f;
 	map->rotation_y = 0.0f;
+	map->rotation_z = 0.0f;
 	map->offset_x = 0;
 	map->offset_y = 0;
 	map->z_scale = 1.0f;

@@ -6,7 +6,7 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 13:10:17 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/21 17:18:51 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/09/22 19:58:37 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_map
 	float	z_scale;
 	float	rotation_x;
 	float	rotation_y;
+	float	rotation_z;
 	int		offset_x;
 	int		offset_y;
 
