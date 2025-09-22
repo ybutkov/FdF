@@ -16,6 +16,7 @@ C_FDF_FILES = parcer/get_next_line.c \
 			base_stack/stack_base_basic.c \
 			base_stack/stack_base_core.c \
 			base_stack/stack_base_operations.c \
+			common/exit_program.c \
 			draw_func/put_pixel.c \
 			draw_func/draw_line.c \
 			map_op/map_core.c \

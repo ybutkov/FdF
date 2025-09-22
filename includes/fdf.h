@@ -6,7 +6,7 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 13:19:13 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/21 18:36:30 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/09/22 14:05:38 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ typedef struct s_app
 	size_t	width;
 	size_t	height;
 	t_map	*map;
-	t_img	img;
+	t_img	*img;
 }			t_app;
+
+void		exit_program(t_app *app);
+void		render_map(t_app *app);
 
 #endif
