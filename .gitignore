@@ -1,0 +1,5 @@
+.DS*
+.vscode
+*.out
+*.dSYM/
+MinilibX/
