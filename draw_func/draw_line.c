@@ -6,15 +6,15 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 13:16:41 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/21 16:19:38 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/09/23 19:20:54 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "draw.h"
 #include "fdf.h"
 #include "map.h"
 #include "utils.h"
 #include <math.h>
-#include "draw.h"
 
 void	draw_line(t_img *img, t_point_2d from, t_point_2d to)
 {
@@ -25,6 +25,9 @@ void	draw_line(t_img *img, t_point_2d from, t_point_2d to)
 	int	err;
 	int	err2;
 
+	if (from.x >= 0 && from.x < WINDOW_WIDTH && from.y >= 0
+		&& from.y < WINDOW_HEIGHT)
+		draw_circle(img, from, 4, from.color);
 	dx = ft_abs(to.x - from.x);
 	dy = ft_abs(to.y - from.y);
 	sx = ft_sign(to.x - from.x);
@@ -49,4 +52,6 @@ void	draw_line(t_img *img, t_point_2d from, t_point_2d to)
 			from.y += sy;
 		}
 	}
+	if (to.x >= 0 && to.x < WINDOW_WIDTH && to.y >= 0 && to.y < WINDOW_HEIGHT)
+		draw_circle(img, to, 4, to.color);
 }

@@ -6,7 +6,7 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 13:18:38 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/22 20:22:35 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/09/23 19:34:23 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,23 +44,6 @@ void	print_map(t_map *map)
 	}
 }
 
-// t_point_2d	project_iso(t_map *map, int x, int y)
-// {
-// 	t_point		*point;
-// 	t_point_2d	result;
-// 	float		angle;
-
-// 	angle = 0.523599;
-// 	point = map->get_point(map, x, y);
-// 	if (!point)
-// 		return ((t_point_2d){0, 0, 0});
-// 	result.x = (x - y) * cos(angle) * map->zoom + map->offset_x;
-// 	result.y = (x + y) * sin(angle) * map->zoom - point->z * map->z_scale
-// 		* map->zoom + map->offset_y;
-// 	result.color = point->color;
-// 	return (result);
-// }
-
 t_point_2d iso_project(t_point_3d point)
 {
 	t_point_2d	result;
@@ -81,8 +64,11 @@ void rotate_x(t_point_3d *point, float angle)
 
 	cos_angle = cos(angle);
 	sin_angle = sin(angle);
+	// y = point->y * cos_angle - point->z * sin_angle;
+	// z = point->y * sin_angle + point->z * cos_angle;
 	y = point->y * cos_angle - point->z * sin_angle;
 	z = point->y * sin_angle + point->z * cos_angle;
+
 	point->y = y;
 	point->z = z;
 }
@@ -96,8 +82,11 @@ void rotate_y(t_point_3d *point, float angle)
 
 	cos_angle = cos(angle);
 	sin_angle = sin(angle);
+	// x = point->x * cos_angle + point->z * sin_angle;
+	// z = -point->x * sin_angle + point->z * cos_angle;
 	x = point->x * cos_angle + point->z * sin_angle;
 	z = -point->x * sin_angle + point->z * cos_angle;
+
 	point->x = x;
 	point->z = z;
 }
@@ -189,6 +178,53 @@ void	render_map(t_app *app)
 	mlx_put_image_to_window(app->mlx, app->win, app->img->img, 0, 0);
 }
 
+void	set_default_zoom_offset(t_map *map)
+{
+	map->zoom = fmin(1.0 * WINDOW_WIDTH / map->width,
+				1.0 * WINDOW_HEIGHT / map->height);
+	// if (map->zoom < 1)
+	map->zoom = map->zoom * 0.7f;
+	map->offset_x = (int)((WINDOW_WIDTH - map->width * map->zoom)/2);
+	map->offset_y = (int)((WINDOW_HEIGHT - map->height * map->zoom)/2);
+}
+
+void	init_camera(t_map *map)
+{
+	int		x, y;
+	double	z_min = 1e9;
+	double	z_max = -1e9;
+	double	zoom_x, zoom_y, zoom_plane;
+	double	width, height;
+	// 1. Находим минимальную и максимальную высоту
+	for (y = 0; y < map->height; y++)
+	{
+		for (x = 0; x < map->width; x++)
+		{
+			double z = transform_point(map, x, y).y;
+			if (z < z_min) z_min = z;
+			if (z > z_max) z_max = z;
+		}
+	}
+	printf("z_min=%f, z_max=%f\n", z_min, z_max);
+	map->zoom = 1.0;
+	map->z_scale = 1.0;
+	width = transform_point(map, map->width-1, 0).x - transform_point(map, 0, map->height-1).x;
+	height = transform_point(map, map->width-1, map->height-1).y - transform_point(map, 0, 0).y;
+	zoom_x = WINDOW_WIDTH / width;
+	zoom_y = WINDOW_HEIGHT / height;
+	zoom_plane = fmin(zoom_x, zoom_y) * 0.6;
+	map->zoom = zoom_plane;
+	if (z_max - z_min != 0)
+		map->z_scale = fmin(zoom_plane / 4, (WINDOW_HEIGHT) / (z_max - z_min) / 4);
+	else
+		map->z_scale = 1.0;
+	// map->z_scale = map->zoom / 4;
+	// 4. Смещение для центрирования
+	map->offset_x = (WINDOW_WIDTH  - width * map->zoom) / 2 +
+		transform_point(map, 0, 0).x - transform_point(map, 0, map->height-1).x;
+	map->offset_y = (WINDOW_HEIGHT - height * map->zoom) / 2;
+}
+
 void	init_mlx_window(t_map *map)
 {
 	t_app	*app;
@@ -210,8 +246,12 @@ void	init_mlx_window(t_map *map)
 	app->img->addr = mlx_get_data_addr(app->img->img, &(app->img->bits_per_pixel),
 			&(app->img->line_length), &(app->img->endian));
 	app->map = map;
+	// set_default_zoom_offset(map);
+	init_camera(map);
+	printf("zoom: %f, offset_x=%d, offset_y=%d, z-scale=%f\n",
+		map->zoom, map->offset_x, map->offset_y, map->z_scale);
+	// map->zoom = 45;
 	render_map(app);
-	
 	mlx_loop(app->mlx);
 }
 

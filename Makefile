@@ -7,7 +7,9 @@ MinilibX = MinilibX
 
 CC = cc
 # CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address,undefined $(LIB_INCLUDE)
-CFLAGS = -Wall -Wextra -Werror -g -O3 $(LIB_INCLUDE) -I$(MinilibX)
+# CFLAGS = -Wall -Wextra -Werror -g -O3 $(LIB_INCLUDE) -I$(MinilibX)
+CFLAGS = -Wall -Wextra -Werror -g -O0 $(LIB_INCLUDE) -I$(MinilibX)
+
 
 LFLAGS = -L$(MinilibX) -lmlx -L$(MinilibX)/lib -lXext -lX11 -lm
 
@@ -19,6 +21,7 @@ C_FDF_FILES = parcer/get_next_line.c \
 			common/exit_program.c \
 			draw_func/put_pixel.c \
 			draw_func/draw_line.c \
+			draw_func/draw_circle.c \
 			map_op/map_core.c \
 			events/hooks.c \
 			utils/error.c \
