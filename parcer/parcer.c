@@ -6,7 +6,7 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 14:04:15 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/23 16:55:19 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/09/24 16:38:04 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,9 +145,9 @@ t_map	*read_map_from_file(const char *filename)
 	// map->offset_y = 300;
 	// map->rotation_x = M_PI / 6;
 	// map->rotation_y = -M_PI / 4;
-	map->rotation_x = 0;
-	map->rotation_y = 0;
-	map->rotation_z = 0;
-	map->z_scale = 0.5f;
+	// map->rotation_x = 0;
+	// map->rotation_y = 0;
+	// map->rotation_z = 0;
+	// map->z_scale = 0.5f;
 	return (map);
 }

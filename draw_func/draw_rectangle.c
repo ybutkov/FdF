@@ -1,28 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   put_pixel.c                                        :+:      :+:    :+:   */
+/*   draw_rectangle.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/21 15:04:53 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/24 15:28:42 by ybutkov          ###   ########.fr       */
+/*   Created: 2025/09/24 17:33:43 by ybutkov           #+#    #+#             */
+/*   Updated: 2025/09/24 17:42:11 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include "map.h"
+#include "draw.h"
+#include "point.h"
 
-void	ft_mlx_pixel_put(t_img *img, t_point_2d point)
+void	draw_rectangle(t_img *img, t_point_2d left_top, t_point_2d bottom_right,
+		int color)
 {
-	char	*dst;
+	t_point_2d	current;
+	int			x;
+	int			y;
 
-	if (point.x >= 0 && point.x < WINDOW_WIDTH && point.y >= 0
-		&& point.y < WINDOW_HEIGHT)
+	y = left_top.y;
+	while (y <= bottom_right.y)
 	{
-		dst = img->addr + (point.y * img->line_length + point.x
-				* (img->bits_per_pixel / 8));
-		*(unsigned int *)dst = point.color;
+		x = left_top.x;
+		while (x < bottom_right.x)
+		{
+			current = (t_point_2d){x, y, color};
+			ft_mlx_pixel_put(img, current);
+			x++;
+		}
+		y++;
 	}
-	// *(unsigned int *)dst = 16776960;
 }

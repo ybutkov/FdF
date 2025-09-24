@@ -6,13 +6,14 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:11:26 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/22 14:01:51 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/09/24 17:02:46 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "hooks.h"
 #include "keys.h"
+#include <math.h>
 
 int	close_window(t_app *app)
 {
@@ -27,10 +28,9 @@ int	key_pressed_hook(int key, t_app *app)
 {
 	(void)app;
 	printf("Key pressed: %d\n", key);
-
 	if (key == KEY_ESC)
 	{
-		exit_program(app);  // твоя функция очистки и выхода
+		exit_program(app); // твоя функция очистки и выхода
 	}
 	else if (key == KEY_UP)
 		app->map->offset_y -= 10;
@@ -45,18 +45,31 @@ int	key_pressed_hook(int key, t_app *app)
 	else if (key == KEY_MINUS && app->map->zoom > 1)
 		app->map->zoom--;
 	else if (key == KEY_W)
-		app->map->rotation_x += 0.1;
+		app->map->rotation_x += 0.05;
 	else if (key == KEY_S)
-		app->map->rotation_x -= 0.1;
+		app->map->rotation_x -= 0.05;
 	else if (key == KEY_A)
-		app->map->rotation_y += 0.1;
+		app->map->rotation_y += 0.05;
 	else if (key == KEY_D)
-		app->map->rotation_y -= 0.1;
+		app->map->rotation_y -= 0.05;
+	else if (key == KEY_Z)
+		app->map->rotation_z += 0.05;
+	else if (key == KEY_X)
+		app->map->rotation_z -= 0.05;
 	else if (key == KEY_Q)
-		app->map->z_scale += 0.1;
+		app->map->z_scale += 0.005;
 	else if (key == KEY_E)
-		app->map->z_scale -= 0.1;
-	// добавишь свои фичи для бонуса (TAB, R/F и т.п.)
-	render_map(app);  // перерисовываем
+		app->map->z_scale -= 0.005;
+	else if (key == KEY_R)
+		app->map->reset(app->map);
+	else if (key == KEY_T)
+		app->map->set_rotation(app->map, -M_PI / 2, 0, 0);
+	else if (key == KEY_Y)
+		app->map->set_rotation(app->map, 0, 0, 0);
+	else if (key == KEY_U)
+		app->map->set_rotation(app->map, 0, M_PI / 2, 0);
+	else if (key == KEY_I)
+		app->map->set_rotation(app->map, -M_PI / 6, -M_PI / 6, 0);
+	app->render(app);
 	return (0);
 }
