@@ -6,7 +6,7 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 14:04:15 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/24 16:38:04 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/09/25 18:37:18 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,20 +134,5 @@ t_map	*read_map_from_file(const char *filename)
 		error_and_exit();
 	fill_map_from_stack(map, stack);
 	stack->free(stack);
-
-	// map->zoom = WINDOW_WIDTH / (float)(map->width);
-	// map->zoom = (fmin(WINDOW_WIDTH / (float)(map->width),
-	// 			WINDOW_HEIGHT / (float)(map->height))) * 0.7f;
-	// map->zoom = 10;
-	// map->offset_x = WINDOW_WIDTH / 2 - (map->width * map->zoom) / 2;
-	// map->offset_y = WINDOW_HEIGHT / 2 - (map->height * map->zoom) / 2;
-	// map->offset_x = 300;
-	// map->offset_y = 300;
-	// map->rotation_x = M_PI / 6;
-	// map->rotation_y = -M_PI / 4;
-	// map->rotation_x = 0;
-	// map->rotation_y = 0;
-	// map->rotation_z = 0;
-	// map->z_scale = 0.5f;
 	return (map);
 }

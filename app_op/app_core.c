@@ -6,15 +6,17 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 15:42:48 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/24 18:06:30 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/09/25 19:26:52 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "colors.h"
 #include "draw.h"
 #include "fdf.h"
 #include "hooks.h"
 #include "map.h"
 #include "point.h"
+#include "utils.h"
 
 void	free_app(t_app *app)
 {
@@ -58,24 +60,45 @@ void	clear_image(t_img *img)
 	}
 }
 
-void draw_info_panel(t_app *app)
+void	draw_info_panel(t_app *app)
 {
-	draw_rectangle(app->img, (t_point_2d){0, 0, 0x202020},
-		(t_point_2d){500, app->height-1, 0x0000FF}, 0x202020);
+	draw_rectangle(app->img, (t_point_2d){0, 0, 0x000000},
+		(t_point_2d){INFO_PANEL_WIDTH, app->height - 1, 0x000000},
+		COLOR_DEEP_INDIGO);
 }
 
-void print_info_panel(t_app *app)
+static void	print_info_line(t_app *app, int y, char *label1, char *value,
+		char *label2)
 {
-	mlx_string_put(app->mlx, app->win, 100, 100, 0xFFFFFF, "Rotation X: W/S");
-	mlx_string_put(app->mlx, app->win, 100, 130, 0xFFFFFF, "Rotation Y: A/D");
-	mlx_string_put(app->mlx, app->win, 100, 160, 0xFFFFFF, "Rotation Z: Z/X");
-	mlx_string_put(app->mlx, app->win, 100, 190, 0xFFFFFF, "Zoom: +/-");
-	mlx_string_put(app->mlx, app->win, 100, 220, 0xFFFFFF, "Z Scale: Q/E");
-	mlx_string_put(app->mlx, app->win, 100, 250, 0xFFFFFF, "Move: Arrows");
-	mlx_string_put(app->mlx, app->win, 100, 280, 0xFFFFFF, "Reset: R");
-	mlx_string_put(app->mlx, app->win, 100, 310, 0xFFFFFF, "Top View: T");
-	mlx_string_put(app->mlx, app->win, 100, 340, 0xFFFFFF, "Iso View: I");
-	mlx_string_put(app->mlx, app->win, 100, 370, 0xFFFFFF, "Front View: Y");
+	mlx_string_put(app->mlx, app->win, 100, y, COLOR_CYAN, label1);
+	mlx_string_put(app->mlx, app->win, 180, y, COLOR_YELLOW, value);
+	mlx_string_put(app->mlx, app->win, 280, y, COLOR_WHITE, label2);
+}
+
+void	print_info_panel(t_app *app)
+{
+	mlx_string_put(app->mlx, app->win, 50, 70, COLOR_NEON_LIME, "ROTATION");
+	print_info_line(app, 100, "Rotation X:",
+		ft_doubletostr(app->map->rotation_x, 2), "W/S");
+	print_info_line(app, 130, "Rotation Y:",
+		ft_doubletostr(app->map->rotation_y, 2), "A/D");
+	print_info_line(app, 160, "Rotation Z:",
+		ft_doubletostr(app->map->rotation_z, 2), "Z/X");
+	mlx_string_put(app->mlx, app->win, 50, 190, COLOR_NEON_LIME, "ZOOM");
+	print_info_line(app, 220, "Zoom:", ft_doubletostr(app->map->zoom, 2),
+		"+/-");
+	print_info_line(app, 250, "Z Scale:", ft_doubletostr(app->map->z_scale, 2),
+		"Q/E");
+	mlx_string_put(app->mlx, app->win, 50, 280, COLOR_NEON_LIME, "MOVE");
+	print_info_line(app, 310, "Offset X:", ft_doubletostr(app->map->offset_x,
+			2), "left/right");
+	print_info_line(app, 340, "Offset Y:", ft_doubletostr(app->map->offset_y,
+			2), "up/down");
+	mlx_string_put(app->mlx, app->win, 50, 370, COLOR_NEON_LIME, "VIEWS");
+	print_info_line(app, 400, "Reset view", "", "R");
+	print_info_line(app, 430, "Top view", "", "T");
+	print_info_line(app, 470, "Iso view", "", "I");
+	print_info_line(app, 500, "Front view", "", "Y");
 }
 
 void	render_map(t_app *app)
@@ -124,6 +147,12 @@ t_app	*create_app(t_map *map, char *title)
 	app->win = mlx_new_window(app->mlx, app->width, app->height, title);
 	// mlx_hook(app->win, KEY_ESC, 0, close_window, app);
 	mlx_hook(app->win, 2, 1L << 0, key_pressed_hook, app);
+
+	// mlx_mouse_hook(app->win, ft_mouse_press, app);
+	// mlx_hook(app->win, 4, 0, ft_mouse_press, app);
+
+	mlx_hook(app->win, 4, 1L << 2, ft_mouse_press, app);
+	mlx_hook(app->win, 6, 1L << 6, ft_mouse_move, app);
 	app->img = (t_img *)malloc(sizeof(t_img));
 	if (!app->img)
 		exit_program(app);

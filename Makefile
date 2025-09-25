@@ -8,7 +8,7 @@ MinilibX = MinilibX
 CC = cc
 # CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address,undefined $(LIB_INCLUDE)
 # CFLAGS = -Wall -Wextra -Werror -g -O3 $(LIB_INCLUDE) -I$(MinilibX)
-CFLAGS = -Wall -Wextra -Werror -g -O0 -fsanitize=address,undefined $(LIB_INCLUDE) -I$(MinilibX)
+CFLAGS = -Wall -Wextra -Werror -g -O0 $(LIB_INCLUDE) -I$(MinilibX)
 
 
 LFLAGS = -L$(MinilibX) -lmlx -L$(MinilibX)/lib -lXext -lX11 -lm
@@ -26,12 +26,15 @@ C_FDF_FILES = parcer/get_next_line.c \
 			map_op/map_core.c \
 			app_op/app_core.c \
 			events/hooks.c \
+			events/mouse_hooks.c \
 			utils/error.c \
 			utils/ft_calloc.c \
 			utils/ft_memcpy.c \
 			utils/ft_memset.c \
 			utils/ft_memmove.c \
 			utils/ft_split.c \
+			utils/ft_strjoin.c \
+			utils/ft_strdup.c \
 			utils/ft_atoi.c \
 			utils/ft_putstr.c \
 			utils/ft_strlen.c \
@@ -41,7 +44,10 @@ C_FDF_FILES = parcer/get_next_line.c \
 			utils/ft_toupper.c \
 			utils/ft_str_capitalise.c \
 			utils/ft_abs.c \
-			utils/ft_sign.c
+			utils/ft_sign.c \
+			utils/ft_ultoa.c \
+			utils/ft_lltoa.c \
+			utils/ft_doubletostr.c
 
 
 OBJ_FDF =	$(C_FDF_FILES:%.c=$(BUILD_DIR)/%.o)

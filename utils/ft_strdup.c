@@ -1,23 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hooks.h                                            :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/21 18:12:51 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/25 19:18:00 by ybutkov          ###   ########.fr       */
+/*   Created: 2025/07/05 17:13:00 by ybutkov           #+#    #+#             */
+/*   Updated: 2025/09/25 14:12:50 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HOOKS_H
-# define HOOKS_H
+#include "utils.h"
 
-# include "fdf.h"
+static char	*ft_strcpy(char *dst, const char *src)
+{
+	char	*res;
 
-int	close_window(t_app *app);
-int	key_pressed_hook(int key, t_app *app);
-int	ft_mouse_move(int x, int y, t_app *app);
-int	ft_mouse_press(int button, int x, int y, t_app *app);
+	res = dst;
+	while (*src)
+		*dst++ = *src++;
+	*dst = '\0';
+	return (res);
+}
 
-#endif
+char	*ft_strdup(const char *s1)
+{
+	void	*res;
+
+	res = malloc((ft_strlen(s1) + 1) * sizeof(char));
+	if (res == NULL)
+		return (NULL);
+	return (ft_strcpy(res, s1));
+}

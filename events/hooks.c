@@ -6,7 +6,7 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:11:26 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/24 17:02:46 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/09/25 18:10:43 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	close_window(t_app *app)
 int	key_pressed_hook(int key, t_app *app)
 {
 	(void)app;
-	printf("Key pressed: %d\n", key);
+	// printf("Key pressed: %d\n", key);
 	if (key == KEY_ESC)
 	{
 		exit_program(app); // твоя функция очистки и выхода
@@ -45,17 +45,17 @@ int	key_pressed_hook(int key, t_app *app)
 	else if (key == KEY_MINUS && app->map->zoom > 1)
 		app->map->zoom--;
 	else if (key == KEY_W)
-		app->map->rotation_x += 0.05;
+		app->map->rotate(app->map, 0.05, 0, 0);
 	else if (key == KEY_S)
-		app->map->rotation_x -= 0.05;
+		app->map->rotate(app->map, -0.05, 0, 0);
 	else if (key == KEY_A)
-		app->map->rotation_y += 0.05;
+		app->map->rotate(app->map, 0, 0.05, 0);
 	else if (key == KEY_D)
-		app->map->rotation_y -= 0.05;
+		app->map->rotate(app->map, 0, -0.05, 0);
 	else if (key == KEY_Z)
-		app->map->rotation_z += 0.05;
+		app->map->rotate(app->map, 0, 0, 0.05);
 	else if (key == KEY_X)
-		app->map->rotation_z -= 0.05;
+		app->map->rotate(app->map, 0, 0, -0.05);
 	else if (key == KEY_Q)
 		app->map->z_scale += 0.005;
 	else if (key == KEY_E)

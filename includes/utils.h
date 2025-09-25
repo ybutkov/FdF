@@ -6,7 +6,7 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 13:59:35 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/21 16:03:34 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/09/25 18:02:16 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,16 @@ void	*ft_realloc(void *ptr, size_t old_size, size_t new_size);
 char	**ft_split(char const *s, char c);
 int		ft_atoi(const char *str);
 size_t	ft_strlen(const char *s);
+char	*ft_strdup(const char *s1);
+char	*ft_strjoin(char const *s1, char const *s2);
 int		ft_toupper(int c);
 int		ft_putstr(char *str);
 long	ft_abs(long value);
 int		ft_sign(int x);
 long	base_to_long(char *nbr, char *base_from);
+char	*ft_ultoa(unsigned long n);
+char	*ft_lltoa(long long n);
+char	*ft_doubletostr(double n, int precision);
 void	error_and_exit(void);
 
 #endif

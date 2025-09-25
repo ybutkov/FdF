@@ -6,7 +6,7 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 13:19:13 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/24 16:29:27 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/09/25 18:33:25 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
+# define INFO_PANEL_WIDTH 400
 
 typedef struct s_app
 {

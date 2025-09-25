@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hooks.h                                            :+:      :+:    :+:   */
+/*   colors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/21 18:12:51 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/25 19:18:00 by ybutkov          ###   ########.fr       */
+/*   Created: 2025/09/25 14:59:36 by ybutkov           #+#    #+#             */
+/*   Updated: 2025/09/25 15:02:21 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HOOKS_H
-# define HOOKS_H
+#ifndef COLORS_H
+# define COLORS_H
 
-# include "fdf.h"
-
-int	close_window(t_app *app);
-int	key_pressed_hook(int key, t_app *app);
-int	ft_mouse_move(int x, int y, t_app *app);
-int	ft_mouse_press(int button, int x, int y, t_app *app);
+# define COLOR_WHITE 0xFFFFFF
+# define COLOR_NEON_LIME 0x39FF14
+# define COLOR_CYAN 0x00FFFF
+# define COLOR_YELLOW 0xFFFF00
+# define COLOR_DEEP_INDIGO 0x191940
 
 #endif
