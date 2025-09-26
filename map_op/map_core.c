@@ -6,7 +6,7 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 13:03:00 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/25 18:43:22 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/09/26 14:48:04 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ void	reset_map_transformations(t_map *map)
 		+ map->transform_point(map, 0, 0).x - map->transform_point(map, 0,
 			map->height - 1).x;
 	map->offset_y = (WINDOW_HEIGHT - height * map->zoom) / 2;
+	map->is_change = 0;
 }
 
 static t_point	*get_point(t_map *map, int x, int y)
@@ -204,6 +205,8 @@ t_map	*create_map(size_t width, size_t height)
 	map->rotation_y = 0.0;
 	map->offset_x = 0;
 	map->offset_y = 0;
+	map->is_moving = 0;
+	map->is_change = 0;
 	map->free = free_map;
 	map->reset = reset_map_transformations;
 	map->get_point = get_point;

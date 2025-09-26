@@ -6,7 +6,7 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 13:18:38 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/24 16:29:51 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/09/26 14:46:33 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	init_mlx_window(t_map *map, char *title)
 	app = create_app(map, title);
 	if (!app)
 		exit_program(NULL);
-	app->render(app);
+	// app->render(app);
 	mlx_loop(app->mlx);
 }
 

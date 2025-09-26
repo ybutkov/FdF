@@ -6,7 +6,7 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 15:42:48 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/25 19:26:52 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/09/26 16:46:04 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 #include "draw.h"
 #include "fdf.h"
 #include "hooks.h"
+#include "keys.h"
 #include "map.h"
 #include "point.h"
 #include "utils.h"
+#include <time.h>
 
 void	free_app(t_app *app)
 {
@@ -94,11 +96,17 @@ void	print_info_panel(t_app *app)
 			2), "left/right");
 	print_info_line(app, 340, "Offset Y:", ft_doubletostr(app->map->offset_y,
 			2), "up/down");
-	mlx_string_put(app->mlx, app->win, 50, 370, COLOR_NEON_LIME, "VIEWS");
-	print_info_line(app, 400, "Reset view", "", "R");
-	print_info_line(app, 430, "Top view", "", "T");
-	print_info_line(app, 470, "Iso view", "", "I");
-	print_info_line(app, 500, "Front view", "", "Y");
+	mlx_string_put(app->mlx, app->win, 50, 370, COLOR_NEON_LIME,
+		"MOUSE position");
+	int x, y;
+	mlx_mouse_get_pos(app->mlx, app->win, &x, &y);
+	print_info_line(app, 400, "X:", ft_lltoa(x), "");
+	print_info_line(app, 430, "Y:", ft_lltoa(y), "");
+	mlx_string_put(app->mlx, app->win, 50, 460, COLOR_NEON_LIME, "VIEWS");
+	print_info_line(app, 490, "Reset view", "", "R");
+	print_info_line(app, 520, "Top view", "", "T");
+	print_info_line(app, 550, "Iso view", "", "I");
+	print_info_line(app, 580, "Front view", "", "Y");
 }
 
 void	render_map(t_app *app)
@@ -108,6 +116,7 @@ void	render_map(t_app *app)
 	t_point_2d	bottom;
 	t_map		*map;
 
+	printf("Rendering map...\n");
 	app->clear_image(app->img);
 	map = app->map;
 	for (int y = 0; y < map->height; y++)
@@ -132,6 +141,26 @@ void	render_map(t_app *app)
 	draw_info_panel(app);
 	mlx_put_image_to_window(app->mlx, app->win, app->img->img, 0, 0);
 	print_info_panel(app);
+	app->last_frame_time = get_time_in_milliseconds();
+	app->map->is_change = 0;
+}
+
+int	loop_hook(t_app *app)
+{
+	long int	current_time;
+
+	// printf("Loop hook called %d\n", app->map->is_change);
+	current_time = get_time_in_milliseconds();
+	if (!app->map->is_change && (current_time
+		- app->last_frame_time < MIN_TIME_FRAMES))
+		{
+			// printf("Skipping frame to maintain frame rate\n");
+			return (0);
+		}
+	printf("Rendering frame\n");
+	app->render(app);
+	// app->map->is_change = 0;
+	return (0);
 }
 
 t_app	*create_app(t_map *map, char *title)
@@ -147,12 +176,13 @@ t_app	*create_app(t_map *map, char *title)
 	app->win = mlx_new_window(app->mlx, app->width, app->height, title);
 	// mlx_hook(app->win, KEY_ESC, 0, close_window, app);
 	mlx_hook(app->win, 2, 1L << 0, key_pressed_hook, app);
-
+	// mlx_key_hook(app->win, ft_key_hook, app);
 	// mlx_mouse_hook(app->win, ft_mouse_press, app);
 	// mlx_hook(app->win, 4, 0, ft_mouse_press, app);
-
 	mlx_hook(app->win, 4, 1L << 2, ft_mouse_press, app);
 	mlx_hook(app->win, 6, 1L << 6, ft_mouse_move, app);
+	mlx_loop_hook(app->mlx, loop_hook, app);
+	// mlx_loop_hook(app->mlx, NULL, app);
 	app->img = (t_img *)malloc(sizeof(t_img));
 	if (!app->img)
 		exit_program(app);
@@ -165,5 +195,6 @@ t_app	*create_app(t_map *map, char *title)
 	app->render = render_map;
 	app->free = free_app;
 	app->clear_image = clear_image;
+	app->last_frame_time = get_time_in_milliseconds() - MIN_TIME_FRAMES - 1;
 	return (app);
 }

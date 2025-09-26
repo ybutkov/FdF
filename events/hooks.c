@@ -6,7 +6,7 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:11:26 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/25 18:10:43 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/09/26 14:46:41 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,6 @@ int	key_pressed_hook(int key, t_app *app)
 		app->map->set_rotation(app->map, 0, M_PI / 2, 0);
 	else if (key == KEY_I)
 		app->map->set_rotation(app->map, -M_PI / 6, -M_PI / 6, 0);
-	app->render(app);
+	// app->render(app);
 	return (0);
 }

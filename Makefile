@@ -47,7 +47,8 @@ C_FDF_FILES = parcer/get_next_line.c \
 			utils/ft_sign.c \
 			utils/ft_ultoa.c \
 			utils/ft_lltoa.c \
-			utils/ft_doubletostr.c
+			utils/ft_doubletostr.c \
+			utils/time_func.c
 
 
 OBJ_FDF =	$(C_FDF_FILES:%.c=$(BUILD_DIR)/%.o)

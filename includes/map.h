@@ -6,7 +6,7 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 13:10:17 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/25 18:06:29 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/09/26 14:41:52 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ typedef struct s_map
 	double		rotation_z;
 	int			offset_x;
 	int			offset_y;
+	int			is_moving;
+	int			is_change;
 
 	void		(*free)(struct s_map *map);
 	void		(*reset)(struct s_map *map);
