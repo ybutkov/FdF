@@ -6,7 +6,7 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:11:26 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/26 14:46:41 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/09/27 19:40:16 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,33 +17,27 @@
 
 int	close_window(t_app *app)
 {
-	(void)app;
-	// free(app->img.img);
-	// free(app->img.addr);
-	// free(app);
+	app->free(app);
 	exit(0);
 }
 
 int	key_pressed_hook(int key, t_app *app)
 {
-	(void)app;
-	// printf("Key pressed: %d\n", key);
+	app->map->is_change = 1;
 	if (key == KEY_ESC)
-	{
-		exit_program(app); // твоя функция очистки и выхода
-	}
+		close_window(app);
 	else if (key == KEY_UP)
-		app->map->offset_y -= 10;
+		app->map->shift(app->map, 0, -app->map->shift_size);
 	else if (key == KEY_DOWN)
-		app->map->offset_y += 10;
+		app->map->shift(app->map, 0, app->map->shift_size);
 	else if (key == KEY_LEFT)
-		app->map->offset_x -= 10;
+		app->map->shift(app->map, -app->map->shift_size, 0);
 	else if (key == KEY_RIGHT)
-		app->map->offset_x += 10;
+		app->map->shift(app->map, app->map->shift_size, 0);
 	else if (key == KEY_PLUS)
-		app->map->zoom++;
+		app->map->zoom_in(app->map, app->map->zoom_size);
 	else if (key == KEY_MINUS && app->map->zoom > 1)
-		app->map->zoom--;
+		app->map->zoom_in(app->map, -app->map->zoom_size);
 	else if (key == KEY_W)
 		app->map->rotate(app->map, 0.05, 0, 0);
 	else if (key == KEY_S)
@@ -70,6 +64,7 @@ int	key_pressed_hook(int key, t_app *app)
 		app->map->set_rotation(app->map, 0, M_PI / 2, 0);
 	else if (key == KEY_I)
 		app->map->set_rotation(app->map, -M_PI / 6, -M_PI / 6, 0);
-	// app->render(app);
+	else
+		app->map->is_change = 0;
 	return (0);
 }

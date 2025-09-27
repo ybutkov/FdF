@@ -1,24 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hooks.h                                            :+:      :+:    :+:   */
+/*   mouse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/21 18:12:51 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/27 13:54:27 by ybutkov          ###   ########.fr       */
+/*   Created: 2025/09/27 13:28:57 by ybutkov           #+#    #+#             */
+/*   Updated: 2025/09/27 14:21:00 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HOOKS_H
-# define HOOKS_H
+#ifndef MOUSE_H
+# define MOUSE_H
 
-# include "fdf.h"
+# define MOUSE_LEFT_BUTTON 1
+# define MOUSE_RIGHT_BUTTON 3
+# define MOUSE_MIDDLE_BUTTON 2
+# define MOUSE_SCROLL_UP 4
+# define MOUSE_SCROLL_DOWN 5
 
-int	close_window(t_app *app);
-int	key_pressed_hook(int key, t_app *app);
-int	ft_mouse_move(int x, int y, t_app *app);
-int	ft_mouse_press(int button, int x, int y, t_app *app);
-int	ft_mouse_release(int button, int x, int y, t_app *app);
+typedef struct s_mouse_state
+{
+	int	left_button;
+	int	right_button;
+	int	middle_button;
+	int	x;
+	int	y;
+	int	prev_x;
+	int	prev_y;
+}		t_mouse_state;
 
 #endif

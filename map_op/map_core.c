@@ -6,7 +6,7 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 13:03:00 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/26 14:48:04 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/09/27 18:49:18 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ void	reset_map_transformations(t_map *map)
 		+ map->transform_point(map, 0, 0).x - map->transform_point(map, 0,
 			map->height - 1).x;
 	map->offset_y = (WINDOW_HEIGHT - height * map->zoom) / 2;
-	map->is_change = 0;
+	map->is_change = 1;
 }
 
 static t_point	*get_point(t_map *map, int x, int y)
@@ -185,10 +185,27 @@ static void rotate_map(t_map *map, double x, double y, double z)
 	map->rotation_z = normalize_angle(map->rotation_z + z);
 }
 
+static void	shift(t_map *map, int x, int y)
+{
+	map->offset_x += x;
+	map->offset_y += y;
+}
+
+void zoom_in(t_map *map, int percent)
+{
+	if (percent == 0)
+		return ;
+	map->zoom *= (1.0 + percent / 100.0);
+	if (map->zoom < 1.0)
+		map->zoom = 1.0;
+}
+
 t_map	*create_map(size_t width, size_t height)
 {
 	t_map	*map;
 
+	if (width <= 0 || height <= 0)
+		return (NULL);
 	map = (t_map *)malloc(sizeof(t_map));
 	if (!map)
 		return (NULL);
@@ -206,7 +223,9 @@ t_map	*create_map(size_t width, size_t height)
 	map->offset_x = 0;
 	map->offset_y = 0;
 	map->is_moving = 0;
-	map->is_change = 0;
+	map->is_change = 1;
+	map->shift_size = SHIFT_SIZE;
+	map->zoom_size = ZOOM_SIZE_PERCENT;
 	map->free = free_map;
 	map->reset = reset_map_transformations;
 	map->get_point = get_point;
@@ -214,5 +233,7 @@ t_map	*create_map(size_t width, size_t height)
 	map->transform_point = transform_point;
 	map->set_rotation = set_rotation;
 	map->rotate = rotate_map;
+	map->shift = shift;
+	map->zoom_in = zoom_in;
 	return (map);
 }

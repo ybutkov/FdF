@@ -6,7 +6,7 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 15:42:48 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/26 16:46:04 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/09/27 19:47:30 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,7 @@ void	free_app(t_app *app)
 	if (app->map)
 		app->map->free(app->map);
 	if (app->mlx)
-	{
-		// No explicit mlx_destroy function for mlx_ptr in MinilibX
-		// But if there were resources to free, they would be handled here
-	}
+		mlx_destroy_display(app->mlx);
 	free(app);
 }
 
@@ -53,11 +50,11 @@ void	clear_image(t_img *img)
 	i = 0;
 	while (i < image_size)
 	{
-		img->addr[i] = 0;     // Blue
-		img->addr[i + 1] = 0; // Green
-		img->addr[i + 2] = 0; // Red
+		img->addr[i] = 0;
+		img->addr[i + 1] = 0;
+		img->addr[i + 2] = 0;
 		if (bytes_per_pixel == 4)
-			img->addr[i + 3] = 0; // Alpha (если используется)
+			img->addr[i + 3] = 0;
 		i += bytes_per_pixel;
 	}
 }
@@ -79,29 +76,42 @@ static void	print_info_line(t_app *app, int y, char *label1, char *value,
 
 void	print_info_panel(t_app *app)
 {
+	char *str;
+	
 	mlx_string_put(app->mlx, app->win, 50, 70, COLOR_NEON_LIME, "ROTATION");
-	print_info_line(app, 100, "Rotation X:",
-		ft_doubletostr(app->map->rotation_x, 2), "W/S");
-	print_info_line(app, 130, "Rotation Y:",
-		ft_doubletostr(app->map->rotation_y, 2), "A/D");
-	print_info_line(app, 160, "Rotation Z:",
-		ft_doubletostr(app->map->rotation_z, 2), "Z/X");
+	str = ft_doubletostr(app->map->rotation_x, 2);
+	print_info_line(app, 100, "Rotation X:", str, "W/S");
+	free(str);
+	str = ft_doubletostr(app->map->rotation_y, 2);
+	print_info_line(app, 130, "Rotation Y:", str, "A/D");
+	free(str);
+	str = ft_doubletostr(app->map->rotation_z, 2);
+	print_info_line(app, 160, "Rotation Z:", str, "Z/X");
+	free(str);
 	mlx_string_put(app->mlx, app->win, 50, 190, COLOR_NEON_LIME, "ZOOM");
-	print_info_line(app, 220, "Zoom:", ft_doubletostr(app->map->zoom, 2),
-		"+/-");
-	print_info_line(app, 250, "Z Scale:", ft_doubletostr(app->map->z_scale, 2),
-		"Q/E");
+	str = ft_doubletostr(app->map->zoom, 2);
+	print_info_line(app, 220, "Zoom:", str, "+/-");
+	free(str);
+	str =	 ft_doubletostr(app->map->z_scale, 2);
+	print_info_line(app, 250, "Z Scale:", str, "Q/E");
+	free(str);
 	mlx_string_put(app->mlx, app->win, 50, 280, COLOR_NEON_LIME, "MOVE");
-	print_info_line(app, 310, "Offset X:", ft_doubletostr(app->map->offset_x,
-			2), "left/right");
-	print_info_line(app, 340, "Offset Y:", ft_doubletostr(app->map->offset_y,
-			2), "up/down");
+	str = ft_doubletostr(app->map->offset_x, 2);
+	print_info_line(app, 310, "Offset X:", str, "left/right");
+	free(str);
+	str = ft_doubletostr(app->map->offset_y, 2);
+	print_info_line(app, 340, "Offset Y:", str, "up/down");
+	free(str);
 	mlx_string_put(app->mlx, app->win, 50, 370, COLOR_NEON_LIME,
 		"MOUSE position");
 	int x, y;
 	mlx_mouse_get_pos(app->mlx, app->win, &x, &y);
-	print_info_line(app, 400, "X:", ft_lltoa(x), "");
-	print_info_line(app, 430, "Y:", ft_lltoa(y), "");
+	str = ft_lltoa(x);
+	print_info_line(app, 400, "X:", str, "");
+	free(str);
+	str = ft_lltoa(y);
+	print_info_line(app, 430, "Y:", str, "");
+	free(str);
 	mlx_string_put(app->mlx, app->win, 50, 460, COLOR_NEON_LIME, "VIEWS");
 	print_info_line(app, 490, "Reset view", "", "R");
 	print_info_line(app, 520, "Top view", "", "T");
@@ -115,12 +125,16 @@ void	render_map(t_app *app)
 	t_point_2d	right;
 	t_point_2d	bottom;
 	t_map		*map;
+	int			x;
+	int			y;
 
-	printf("Rendering map...\n");
 	app->clear_image(app->img);
 	map = app->map;
-	for (int y = 0; y < map->height; y++)
-		for (int x = 0; x < map->width; x++)
+	y = 0;
+	while (y < map->height)
+	{
+		x = 0;
+		while (x < map->width)
 		{
 			from = map->transform_point(map, x, y);
 			if (x + 1 < map->width)
@@ -137,7 +151,10 @@ void	render_map(t_app *app)
 					(t_point_2d){bottom.x, bottom.y, (from.color + bottom.color)
 					/ 2});
 			}
+			x++;
 		}
+		y++;
+	}
 	draw_info_panel(app);
 	mlx_put_image_to_window(app->mlx, app->win, app->img->img, 0, 0);
 	print_info_panel(app);
@@ -145,53 +162,35 @@ void	render_map(t_app *app)
 	app->map->is_change = 0;
 }
 
-int	loop_hook(t_app *app)
-{
-	long int	current_time;
 
-	// printf("Loop hook called %d\n", app->map->is_change);
-	current_time = get_time_in_milliseconds();
-	if (!app->map->is_change && (current_time
-		- app->last_frame_time < MIN_TIME_FRAMES))
-		{
-			// printf("Skipping frame to maintain frame rate\n");
-			return (0);
-		}
-	printf("Rendering frame\n");
-	app->render(app);
-	// app->map->is_change = 0;
-	return (0);
-}
 
-t_app	*create_app(t_map *map, char *title)
+t_app	*create_app(t_map *map)
 {
 	t_app	*app;
 
 	app = (t_app *)malloc(sizeof(t_app));
 	if (!app)
-		exit_program(NULL);
-	app->mlx = mlx_init();
+		return (NULL);
+	// app->mlx = mlx_init();
 	app->height = WINDOW_HEIGHT;
 	app->width = WINDOW_WIDTH;
-	app->win = mlx_new_window(app->mlx, app->width, app->height, title);
-	// mlx_hook(app->win, KEY_ESC, 0, close_window, app);
-	mlx_hook(app->win, 2, 1L << 0, key_pressed_hook, app);
-	// mlx_key_hook(app->win, ft_key_hook, app);
-	// mlx_mouse_hook(app->win, ft_mouse_press, app);
-	// mlx_hook(app->win, 4, 0, ft_mouse_press, app);
-	mlx_hook(app->win, 4, 1L << 2, ft_mouse_press, app);
-	mlx_hook(app->win, 6, 1L << 6, ft_mouse_move, app);
-	mlx_loop_hook(app->mlx, loop_hook, app);
-	// mlx_loop_hook(app->mlx, NULL, app);
+	// app->win = mlx_new_window(app->mlx, app->width, app->height, title);
+	// mlx_hook(app->win, 17, 0, close_window, app);
+	// mlx_hook(app->win, 2, 1L << 0, key_pressed_hook, app);
+	// mlx_hook(app->win, 4, 1L << 2, ft_mouse_press, app);
+	// mlx_hook(app->win, 6, 1L << 6, ft_mouse_move, app);
+	// mlx_hook(app->win, 5, 1L << 3, ft_mouse_release, app);
+	// mlx_loop_hook(app->mlx, loop_hook, app);
 	app->img = (t_img *)malloc(sizeof(t_img));
 	if (!app->img)
-		exit_program(app);
-	app->img->img = mlx_new_image(app->mlx, app->width, app->height);
-	app->img->addr = mlx_get_data_addr(app->img->img,
-			&(app->img->bits_per_pixel), &(app->img->line_length),
-			&(app->img->endian));
+		return (NULL);
+	// app->img->img = mlx_new_image(app->mlx, app->width, app->height);
+	// app->img->addr = mlx_get_data_addr(app->img->img,
+	// 		&(app->img->bits_per_pixel), &(app->img->line_length),
+	// 		&(app->img->endian));
+	app->mouse = (t_mouse_state){0, 0, 0, 0, 0, -1, -1};
 	app->map = map;
-	map->reset(map);
+	// map->reset(map);
 	app->render = render_map;
 	app->free = free_app;
 	app->clear_image = clear_image;

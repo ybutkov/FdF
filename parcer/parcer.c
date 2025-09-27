@@ -6,25 +6,32 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 14:04:15 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/25 18:37:18 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/09/27 19:21:35 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "fdf.h"
 #include "map.h"
 #include "parcer.h"
 #include "stack_base.h"
 #include "utils.h"
-#include "fdf.h"
 #include <fcntl.h>
 #include <math.h>
+#include <stdio.h>
+#include <unistd.h>
 
-int	parse_numbers(char **numbers_str, t_stack *stack)
+int	split_line(char *str, t_stack *stack)
 {
-	int	i;
-	int	amount;
+	char	**numbers_str;
+	int		amount_in_row;
+	int		i;
 
+	numbers_str = ft_split(str, ' ');
+	free(str);
+	if (!numbers_str)
+		return (-1);
+	amount_in_row = 0;
 	i = 0;
-	amount = 0;
 	while (numbers_str[i])
 	{
 		if (numbers_str[i][0] == '\n')
@@ -32,24 +39,11 @@ int	parse_numbers(char **numbers_str, t_stack *stack)
 		else
 		{
 			stack->push(stack, numbers_str[i]);
-			amount++;
+			amount_in_row++;
 		}
 		i++;
 	}
 	free(numbers_str);
-	return (amount);
-}
-
-int	split_line(char *str, t_stack *stack)
-{
-	char	**numbers_str;
-	int		amount_in_row;
-
-	numbers_str = ft_split(str, ' ');
-	free(str);
-	if (!numbers_str)
-		return (-1);
-	amount_in_row = parse_numbers(numbers_str, stack);
 	return (amount_in_row);
 }
 
@@ -97,24 +91,13 @@ void	fill_map_from_stack(t_map *map, t_stack *stack)
 	}
 }
 
-t_map	*read_map_from_file(const char *filename)
+void	read_map_to_stack(int fd, t_stack *stack, int *width, size_t *height)
 {
 	char	*str;
-	int		fd;
 	int		amount_in_row;
-	t_stack	*stack;
-	t_map	*map;
-	int		width;
-	size_t	height;
 
-	fd = open(filename, O_RDONLY);
-	stack = stack_create();
-	if (!stack)
-		error_and_exit();
-	if (fd < 0)
-		error_and_exit();
-	width = -1;
-	height = 0;
+	*width = -1;
+	*height = 0;
 	while (1)
 	{
 		str = get_next_line(fd);
@@ -122,17 +105,45 @@ t_map	*read_map_from_file(const char *filename)
 			break ;
 		amount_in_row = split_line(str, stack);
 		if (amount_in_row < 0)
-			error_and_exit();
-		if (width == -1)
-			width = amount_in_row;
-		else if (width != amount_in_row)
-			error_and_exit();
-		height++;
+		{
+			*width = -1;
+			break ;
+		}
+		if (*width == -1)
+			*width = amount_in_row;
+		else if (*width != amount_in_row)
+		{
+			*width = -1;
+			break ;
+		}
+		(*height)++;
 	}
+}
+
+t_map	*read_map_from_file(const char *filename)
+{
+	int		fd;
+	t_stack	*stack;
+	t_map	*map;
+	int		width;
+	size_t	height;
+
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		return (NULL);
+	stack = stack_create();
+	if (!stack)
+		return (close(fd), NULL);
+	read_map_to_stack(fd, stack, &width, &height);
+	close(fd);
 	map = create_map(width, height);
 	if (!map)
-		error_and_exit();
+	{
+		stack->free(stack);
+		return (NULL);
+	}
 	fill_map_from_stack(map, stack);
+	map->reset(map);
 	stack->free(stack);
 	return (map);
 }
