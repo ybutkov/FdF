@@ -6,7 +6,7 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 13:59:35 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/26 14:19:08 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/09/28 15:31:34 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,7 @@ char		*ft_lltoa(long long n);
 char		*ft_doubletostr(double n, int precision);
 void		error_and_exit(void);
 long int	get_time_in_milliseconds(void);
+int			between(long long value, long long left, long long right);
+int			in_set(char ch, char *set);
 
 #endif

@@ -6,52 +6,50 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 13:16:41 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/25 18:58:15 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/09/28 19:02:05 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "draw.h"
+#include "draw_internal.h"
 #include "fdf.h"
 #include "map.h"
 #include "utils.h"
-#include <math.h>
+
+static t_draw_line_delta	init_delta(t_point_2d from, t_point_2d to)
+{
+	t_draw_line_delta	delta;
+
+	delta.dx = ft_abs(to.x - from.x);
+	delta.dy = ft_abs(to.y - from.y);
+	delta.sx = ft_sign(to.x - from.x);
+	delta.sy = ft_sign(to.y - from.y);
+	delta.err = delta.dx - delta.dy;
+	return (delta);
+}
 
 void	draw_line(t_img *img, t_point_2d from, t_point_2d to)
 {
-	int	dx;
-	int	dy;
-	int	sx;
-	int	sy;
-	int	err;
-	int	err2;
+	t_draw_line_delta	delta;
 
-	// if (from.x >= 0 && from.x < WINDOW_WIDTH && from.y >= 0
-	// 	&& from.y < WINDOW_HEIGHT)
-	// 	draw_circle(img, from, 4, from.color);
-	dx = ft_abs(to.x - from.x);
-	dy = ft_abs(to.y - from.y);
-	sx = ft_sign(to.x - from.x);
-	sy = ft_sign(to.y - from.y);
-	err = dx - dy;
+	delta = init_delta(from, to);
 	while (1)
 	{
-		if (from.x >= 0 && from.x < WINDOW_WIDTH && from.y >= 0
-			&& from.y < WINDOW_HEIGHT)
+		if (between(from.x, 0, WINDOW_WIDTH) && between(from.y, 0,
+				WINDOW_HEIGHT))
 			ft_mlx_pixel_put(img, from);
 		if (from.x == to.x && from.y == to.y)
 			break ;
-		err2 = err * 2;
-		if (err2 > -dy)
+		delta.err2 = delta.err * 2;
+		if (delta.err2 > -delta.dy)
 		{
-			err -= dy;
-			from.x += sx;
+			delta.err -= delta.dy;
+			from.x += delta.sx;
 		}
-		if (err2 < dx)
+		if (delta.err2 < delta.dx)
 		{
-			err += dx;
-			from.y += sy;
+			delta.err += delta.dx;
+			from.y += delta.sy;
 		}
 	}
-	// if (to.x >= 0 && to.x < WINDOW_WIDTH && to.y >= 0 && to.y < WINDOW_HEIGHT)
-	// 	draw_circle(img, to, 4, to.color);
 }

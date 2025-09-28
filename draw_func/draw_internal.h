@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   put_pixel.c                                        :+:      :+:    :+:   */
+/*   draw_internal.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/21 15:04:53 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/28 15:22:59 by ybutkov          ###   ########.fr       */
+/*   Created: 2025/09/28 15:42:22 by ybutkov           #+#    #+#             */
+/*   Updated: 2025/09/28 20:00:56 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
-#include "map.h"
+#ifndef DRAW_INTERNAL_H
+# define DRAW_INTERNAL_H
 
-void	ft_mlx_pixel_put(t_img *img, t_point_2d point)
+typedef struct s_draw_line_delta
 {
-	char	*dst;
+	int	dx;
+	int	dy;
+	int	sx;
+	int	sy;
+	int	err;
+	int	err2;
+}		t_draw_line_delta;
 
-	if (point.x >= 0 && point.x < WINDOW_WIDTH && point.y >= 0
-		&& point.y < WINDOW_HEIGHT)
-	{
-		dst = img->addr + (point.y * img->line_length + point.x
-				* (img->bits_per_pixel / 8));
-		*(unsigned int *)dst = point.color;
-	}
-}
+#endif

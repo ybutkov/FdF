@@ -6,7 +6,7 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:21:43 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/26 13:33:21 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/09/28 20:04:27 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define KEYS_H
 
 # ifdef __linux__
+
 typedef enum e_keys
 {
 	KEY_ESC = 65307,
@@ -35,14 +36,16 @@ typedef enum e_keys
 	KEY_Y = 121,
 	KEY_U = 117,
 	KEY_I = 105,
-	KEY_PLUS = 61,  // '='
-	KEY_MINUS = 45, // '-'
+	KEY_PLUS = 61,
+	KEY_MINUS = 45,
 	KEY_SPACE = 32,
 	KEY_TAB = 65289,
 	KEY_SHIFT = 65505,
 	KEY_CTRL = 65507
 }	t_keys;
+
 # elif __APPLE__
+
 typedef enum e_keys
 {
 	KEY_ESC = 53,

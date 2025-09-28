@@ -6,7 +6,7 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 13:10:17 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/27 16:18:49 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/09/28 20:02:33 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,9 @@
 
 typedef struct s_map
 {
-	// pixels
 	t_point		*points;
-	// dimensions
 	int			width;
 	int			height;
-	// transformations
 	double		zoom;
 	double		z_scale;
 	double		rotation_x;
@@ -36,7 +33,6 @@ typedef struct s_map
 	int			offset_y;
 	int			shift_size;
 	int			zoom_size;
-	int			is_moving;
 	int			is_change;
 
 	void		(*free)(struct s_map *map);
@@ -45,7 +41,7 @@ typedef struct s_map
 	void		(*set_point)(struct s_map *map, int x, int y, t_point point);
 	t_point_2d	(*transform_point)(struct s_map *map, int x, int y);
 	void		(*set_rotation)(struct s_map *map, double x, double y,
-			double z);
+				double z);
 	void		(*rotate)(struct s_map *map, double x, double y, double z);
 	void		(*shift)(struct s_map *map, int x, int y);
 	void		(*zoom_in)(struct s_map *map, int percent);

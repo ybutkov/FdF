@@ -6,7 +6,7 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:09:39 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/25 18:26:53 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/09/28 20:05:58 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,36 +47,3 @@ char	*ft_doubletostr(double n, int precision)
 	}
 	return (str);
 }
-
-// char	*ft_floattostr(float n, int precision)
-// {
-// 	char	*res;
-// 	char	*str;
-// 	char	*result;
-// 	long	nbr;
-// 	float	nf;
-
-// 	printf("n = %f, precision = %d  ", n, precision);
-// 	str = ft_ultoa(round(ft_abs(n)));
-// 	if (str == NULL)
-// 		return (NULL);
-// 	nf = n - round(n);
-// 	nbr = round(nf * powl(10, precision)) - nf;
-// 	printf("nbr = %ld  ", nbr);
-// 	res = ft_strjoin(str, ".");
-// 	free(str);
-// 	if (res == NULL)
-// 		return (NULL);
-// 	str = ft_ultoa(round(nbr));
-// 	if (str == NULL)
-// 		return (free(res), NULL);
-// 	result = ft_strjoin(res, str);
-// 	if (n < 0)
-// 	{
-// 		str = ft_strjoin("-", result);
-// 		printf("%s\n", result);
-// 		return (free(str), free(res), free(result), str);
-// 	}
-// 	printf("%s\n", result);
-// 	return (free(str), free(res), result);
-// }

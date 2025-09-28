@@ -8,7 +8,7 @@ MinilibX = MinilibX
 CC = cc
 # CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address,undefined $(LIB_INCLUDE)
 # CFLAGS = -Wall -Wextra -Werror -g -O3 $(LIB_INCLUDE) -I$(MinilibX)
-CFLAGS = -Wall -Wextra -Werror -g -O0 -fsanitize=address,undefined $(LIB_INCLUDE) -I$(MinilibX)
+CFLAGS = -Wall -Wextra -Werror -g -O0 $(LIB_INCLUDE) -I$(MinilibX)
 
 
 LFLAGS = -L$(MinilibX) -lmlx -L$(MinilibX)/lib -lXext -lX11 -lm
@@ -20,10 +20,12 @@ C_FDF_FILES = parcer/get_next_line.c \
 			base_stack/stack_base_operations.c \
 			draw_func/put_pixel.c \
 			draw_func/draw_line.c \
-			draw_func/draw_circle.c \
 			draw_func/draw_rectangle.c \
 			map_op/map_core.c \
+			map_op/map_transform.c \
+			map_op/map_basic.c \
 			app_op/app_core.c \
+			app_op/app_basic.c \
 			events/hooks.c \
 			events/mouse_hooks.c \
 			utils/error.c \
@@ -47,7 +49,8 @@ C_FDF_FILES = parcer/get_next_line.c \
 			utils/ft_ultoa.c \
 			utils/ft_lltoa.c \
 			utils/ft_doubletostr.c \
-			utils/time_func.c
+			utils/time_func.c \
+			utils/compare_util.c
 
 
 OBJ_FDF =	$(C_FDF_FILES:%.c=$(BUILD_DIR)/%.o)

@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   put_pixel.c                                        :+:      :+:    :+:   */
+/*   compare_util.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/21 15:04:53 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/28 15:22:59 by ybutkov          ###   ########.fr       */
+/*   Created: 2025/09/08 13:58:36 by ybutkov           #+#    #+#             */
+/*   Updated: 2025/09/28 15:31:18 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
-#include "map.h"
+#include "utils.h"
 
-void	ft_mlx_pixel_put(t_img *img, t_point_2d point)
+int	between(long long value, long long left, long long right)
 {
-	char	*dst;
+	if (value >= left && value <= right)
+		return (1);
+	return (0);
+}
 
-	if (point.x >= 0 && point.x < WINDOW_WIDTH && point.y >= 0
-		&& point.y < WINDOW_HEIGHT)
+int	in_set(char ch, char *set)
+{
+	while (*set)
 	{
-		dst = img->addr + (point.y * img->line_length + point.x
-				* (img->bits_per_pixel / 8));
-		*(unsigned int *)dst = point.color;
+		if (ch == *set)
+			return (1);
+		set = set + 1;
 	}
+	return (0);
 }

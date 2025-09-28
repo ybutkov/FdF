@@ -6,7 +6,7 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 13:18:38 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/27 19:22:59 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/09/28 14:14:50 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static int	loop_hook(t_app *app)
 	return (0);
 }
 
-static t_app	*init_mlx(t_map *map, char *title)
+static t_app	*init_app(t_map *map, char *title)
 {
 	t_app	*app;
 
@@ -106,7 +106,7 @@ int	main(int argc, char const *argv[])
 	map = read_map_from_file(argv[1]);
 	if (!map)
 		exit_program(NULL, "Error reading map from file");
-	app = init_mlx(map, (char *)argv[1]);
+	app = init_app(map, (char *)argv[1]);
 	mlx_loop(app->mlx);
 	app->free(app);
 	return (0);

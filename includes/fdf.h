@@ -6,7 +6,7 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 13:19:13 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/27 18:18:39 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/09/28 18:54:15 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ typedef struct s_app
 	void			(*clear_image)(t_img *img);
 }					t_app;
 
-void				render_map(t_app *app);
 t_app				*create_app(t_map *map);
 
 #endif
