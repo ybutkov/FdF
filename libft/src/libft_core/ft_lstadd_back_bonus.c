@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parcer.h                                           :+:      :+:    :+:   */
+/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/19 14:04:29 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/10/01 18:43:33 by ybutkov          ###   ########.fr       */
+/*   Created: 2025/07/08 14:36:17 by ybutkov           #+#    #+#             */
+/*   Updated: 2025/07/09 12:37:56 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARCER_H
-# define PARCER_H
+#include "libft.h"
 
-# include "map.h"
-
-t_map	*read_map_from_file(const char *filename);
-
-#endif
+void	ft_lstadd_back(t_list **lst, t_list *new)
+{
+	if (lst == NULL)
+		return ;
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	ft_lstlast(*lst)->next = new;
+}

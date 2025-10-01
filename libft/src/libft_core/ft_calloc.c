@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parcer.h                                           :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/19 14:04:29 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/10/01 18:43:33 by ybutkov          ###   ########.fr       */
+/*   Created: 2025/07/05 17:01:45 by ybutkov           #+#    #+#             */
+/*   Updated: 2025/08/02 19:06:36 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARCER_H
-# define PARCER_H
+#include "libft.h"
 
-# include "map.h"
+void	*ft_calloc(size_t count, size_t size)
+{
+	void	*res;
 
-t_map	*read_map_from_file(const char *filename);
-
-#endif
+	if (size && (size * count) / size != count)
+		return (NULL);
+	res = malloc(count * size);
+	if (res == NULL)
+		return (NULL);
+	ft_memset(res, 0, count * size);
+	return (res);
+}

@@ -1,20 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parcer.h                                           :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/19 14:04:29 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/10/01 18:43:33 by ybutkov          ###   ########.fr       */
+/*   Created: 2025/07/07 17:31:44 by ybutkov           #+#    #+#             */
+/*   Updated: 2025/07/13 12:46:04 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARCER_H
-# define PARCER_H
+#include "libft.h"
 
-# include "map.h"
-
-t_map	*read_map_from_file(const char *filename);
-
-#endif
+void	ft_putchar_fd(char c, int fd)
+{
+	write(fd, &c, 1);
+}

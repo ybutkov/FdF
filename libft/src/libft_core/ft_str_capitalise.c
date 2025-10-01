@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parcer.h                                           :+:      :+:    :+:   */
+/*   ft_str_capitalise.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/19 14:04:29 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/10/01 18:43:33 by ybutkov          ###   ########.fr       */
+/*   Created: 2025/09/20 18:15:22 by ybutkov           #+#    #+#             */
+/*   Updated: 2025/09/30 17:00:07 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARCER_H
-# define PARCER_H
+#include "libft.h"
 
-# include "map.h"
+char	*ft_str_capitalise(char *str)
+{
+	int	i;
 
-t_map	*read_map_from_file(const char *filename);
-
-#endif
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (str[i])
+	{
+		str[i] = ft_toupper(str[i]);
+		i++;
+	}
+	return (str);
+}

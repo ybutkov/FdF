@@ -6,7 +6,7 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 13:18:38 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/28 14:14:50 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/10/01 18:48:29 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,41 +24,11 @@
 #include <string.h>
 #include <unistd.h>
 
-// void	print_map(t_map *map)
-// {
-// 	t_point	*point;
-
-// 	if (!map || !map->points)
-// 	{
-// 		printf("Map is empty or NULL.\n");
-// 		return ;
-// 	}
-// 	for (int y = 0; y < map->height; y++)
-// 	{
-// 		for (int x = 0; x < map->width; x++)
-// 		{
-// 			point = map->get_point(map, x, y);
-// 			if (point)
-// 				printf("%3d(%#x)", point->z, point->color);
-// 			else
-// 				printf("(NULL) ");
-// 		}
-// 		printf("\n");
-// 	}
-// }
-
-// void print_point(t_point_2d point)
-// {
-// 	printf("Point2D: x=%d, y=%d, color=%#x\n", point.x, point.y, point.color);
-// }
-
 static void	exit_program(t_map *map, char *message)
 {
 	if (map)
 		map->free(map);
 	perror(message);
-	// write(1, message, strlen(message));
-	// write(1, "\n", 1);
 	exit(EXIT_FAILURE);
 }
 
@@ -81,6 +51,9 @@ static t_app	*init_app(t_map *map, char *title)
 	app = create_app(map);
 	if (!app)
 		exit_program(map, "Error creating application");
+	app->key_actions = init_key_actions();
+	if (!app->key_actions)
+		exit_program(map, "Error initializing key actions");
 	app->mlx = mlx_init();
 	app->win = mlx_new_window(app->mlx, app->width, app->height, title);
 	mlx_hook(app->win, 17, 0, close_window, app);

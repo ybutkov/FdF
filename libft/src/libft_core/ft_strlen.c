@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parcer.h                                           :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/19 14:04:29 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/10/01 18:43:33 by ybutkov          ###   ########.fr       */
+/*   Created: 2025/07/03 14:52:38 by ybutkov           #+#    #+#             */
+/*   Updated: 2025/07/10 11:27:42 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARCER_H
-# define PARCER_H
+#include "libft.h"
 
-# include "map.h"
+size_t	ft_strlen(const char *s)
+{
+	size_t	length;
 
-t_map	*read_map_from_file(const char *filename);
-
-#endif
+	length = 0;
+	while (s[length])
+		length++;
+	return (length);
+}

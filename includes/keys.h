@@ -6,7 +6,7 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:21:43 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/28 20:04:27 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/09/29 18:18:46 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ typedef enum e_keys
 	KEY_F = 102,
 	KEY_Z = 122,
 	KEY_X = 120,
-	KEY_T = 116,
-	KEY_Y = 121,
-	KEY_U = 117,
+	KEY_P = 112,
 	KEY_I = 105,
 	KEY_PLUS = 61,
 	KEY_MINUS = 45,
@@ -63,9 +61,7 @@ typedef enum e_keys
 	KEY_F = 3,
 	KEY_Z = 6,
 	KEY_X = 7,
-	KEY_T = 17,
-	KEY_Y = 16,
-	KEY_U = 32,
+	KEY_P = 35,
 	KEY_I = 34,
 	KEY_PLUS = 24,
 	KEY_MINUS = 27,

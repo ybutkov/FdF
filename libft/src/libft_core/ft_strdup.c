@@ -1,20 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parcer.h                                           :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/19 14:04:29 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/10/01 18:43:33 by ybutkov          ###   ########.fr       */
+/*   Created: 2025/07/05 17:13:00 by ybutkov           #+#    #+#             */
+/*   Updated: 2025/07/13 12:49:38 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARCER_H
-# define PARCER_H
+#include "libft.h"
 
-# include "map.h"
+static char	*ft_strcpy(char *dst, const char *src)
+{
+	char	*res;
 
-t_map	*read_map_from_file(const char *filename);
+	res = dst;
+	while (*src)
+		*dst++ = *src++;
+	*dst = '\0';
+	return (res);
+}
 
-#endif
+char	*ft_strdup(const char *s1)
+{
+	void	*res;
+
+	res = malloc((ft_strlen(s1) + 1) * sizeof(char));
+	if (res == NULL)
+		return (NULL);
+	return (ft_strcpy(res, s1));
+}

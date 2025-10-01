@@ -1,20 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parcer.h                                           :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/19 14:04:29 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/10/01 18:43:33 by ybutkov          ###   ########.fr       */
+/*   Created: 2025/07/05 13:53:16 by ybutkov           #+#    #+#             */
+/*   Updated: 2025/07/09 12:35:38 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARCER_H
-# define PARCER_H
+#include "libft.h"
 
-# include "map.h"
+char	*ft_strrchr(const char *s, int c)
+{
+	char	value;
+	char	*str;
+	char	*result;
 
-t_map	*read_map_from_file(const char *filename);
-
-#endif
+	value = (char)c;
+	str = (char *)s;
+	result = NULL;
+	while (*str)
+	{
+		if (*str == value)
+			result = str;
+		str += 1;
+	}
+	if (result)
+		return (result);
+	if (value == '\0')
+		return (str);
+	return (NULL);
+}

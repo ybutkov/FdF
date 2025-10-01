@@ -1,20 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parcer.h                                           :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/19 14:04:29 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/10/01 18:43:33 by ybutkov          ###   ########.fr       */
+/*   Created: 2025/07/05 14:21:56 by ybutkov           #+#    #+#             */
+/*   Updated: 2025/07/09 12:33:46 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARCER_H
-# define PARCER_H
+#include "libft.h"
 
-# include "map.h"
+void	*ft_memchr(const void *s, int c, size_t n)
+{
+	unsigned char	value;
+	unsigned char	*str;
 
-t_map	*read_map_from_file(const char *filename);
-
-#endif
+	value = (unsigned char)c;
+	str = (unsigned char *)s;
+	while (n--)
+	{
+		if (*str == value)
+			return (str);
+		str++;
+	}
+	return (NULL);
+}

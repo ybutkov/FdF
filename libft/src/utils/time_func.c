@@ -1,20 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parcer.h                                           :+:      :+:    :+:   */
+/*   time_func.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/19 14:04:29 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/10/01 18:43:33 by ybutkov          ###   ########.fr       */
+/*   Created: 2025/09/26 14:13:48 by ybutkov           #+#    #+#             */
+/*   Updated: 2025/09/26 14:23:54 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARCER_H
-# define PARCER_H
+#include <sys/time.h>
+#include <time.h>
 
-# include "map.h"
+long int	get_time_in_milliseconds(void)
+{
+	struct timeval	tv;
+	long int		milliseconds;
 
-t_map	*read_map_from_file(const char *filename);
-
-#endif
+	gettimeofday(&tv, NULL);
+	milliseconds = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
+	return (milliseconds);
+}

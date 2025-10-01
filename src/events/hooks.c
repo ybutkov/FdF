@@ -1,20 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parcer.h                                           :+:      :+:    :+:   */
+/*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/19 14:04:29 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/10/01 18:43:33 by ybutkov          ###   ########.fr       */
+/*   Created: 2025/09/21 18:11:26 by ybutkov           #+#    #+#             */
+/*   Updated: 2025/09/29 18:23:25 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARCER_H
-# define PARCER_H
+#include "fdf.h"
+#include "hooks.h"
+#include "keys.h"
 
-# include "map.h"
+int	close_window(t_app *app)
+{
+	app->free(app);
+	exit(0);
+}
 
-t_map	*read_map_from_file(const char *filename);
+int	key_pressed_hook(int key, t_app *app)
+{
+	t_key_action	*action;
 
-#endif
+	app->map->is_change = 1;
+	action = app->key_actions->get_action(app->key_actions, key);
+	if (action)
+		action->action(app);
+	else
+		app->map->is_change = 0;
+	return (0);
+}

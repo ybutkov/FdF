@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_doubletostr.c                                   :+:      :+:    :+:   */
+/*   ft_double_to_str.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 14:09:39 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/29 13:16:32 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/09/30 17:00:46 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "libft.h"
 #include <math.h>
 
 static void	add_fractional_part(char *str, double abs_n, int precision,
@@ -31,7 +31,7 @@ static void	add_fractional_part(char *str, double abs_n, int precision,
 	str[len + i - 1] = '\0';
 }
 
-char	*ft_doubletostr(double n, int precision)
+char	*ft_double_to_str(double n, int precision)
 {
 	char	*str;
 	char	*res;

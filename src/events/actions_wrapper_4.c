@@ -1,20 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parcer.h                                           :+:      :+:    :+:   */
+/*   actions_wrapper_4.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/19 14:04:29 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/10/01 18:43:33 by ybutkov          ###   ########.fr       */
+/*   Created: 2025/09/29 14:01:04 by ybutkov           #+#    #+#             */
+/*   Updated: 2025/09/29 18:17:19 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARCER_H
-# define PARCER_H
+#include "fdf.h"
+#include "hooks.h"
+#include <math.h>
 
-# include "map.h"
+void	key_p_action(t_app *app)
+{
+	app->map->projection = PROJ_PARALLEL;
+}
 
-t_map	*read_map_from_file(const char *filename);
+void	key_i_action(t_app *app)
+{
+	app->map->projection = PROJ_ISO;
+}
 
-#endif
+void	key_esc_action(t_app *app)
+{
+	close_window(app);
+}

@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parcer.h                                           :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/19 14:04:29 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/10/01 18:43:33 by ybutkov          ###   ########.fr       */
+/*   Created: 2025/07/25 17:40:48 by ybutkov           #+#    #+#             */
+/*   Updated: 2025/09/30 17:11:51 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARCER_H
-# define PARCER_H
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-# include "map.h"
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1024
+# endif
 
-t_map	*read_map_from_file(const char *filename);
+# ifndef FD_MAX_SIZE
+#  define FD_MAX_SIZE 64
+# endif
+
+char	*get_next_line(int fd);
 
 #endif
