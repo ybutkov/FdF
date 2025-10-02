@@ -30,6 +30,7 @@ C_FDF_FILES = parcer/parcer.c \
 			draw_func/draw_line.c \
 			draw_func/draw_rectangle.c \
 			map_op/map_core.c \
+			map_op/map_core_2.c \
 			map_op/map_transform.c \
 			map_op/map_basic.c \
 			app_op/app_core.c \

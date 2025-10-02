@@ -6,7 +6,7 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 13:16:41 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/10/01 16:26:13 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/10/02 17:11:59 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static t_draw_line_delta	init_delta(t_point_2d from, t_point_2d to)
 	delta.sx = ft_sign(to.x - from.x);
 	delta.sy = ft_sign(to.y - from.y);
 	delta.err = delta.dx - delta.dy;
+	delta.err2 = 0;
 	return (delta);
 }
 

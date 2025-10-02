@@ -6,7 +6,7 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 13:18:38 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/10/01 18:48:29 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/10/02 15:50:05 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,16 @@ static t_app	*init_app(t_map *map, char *title)
 		exit_program(map, "Error initializing key actions");
 	app->mlx = mlx_init();
 	app->win = mlx_new_window(app->mlx, app->width, app->height, title);
+	app->img->img = mlx_new_image(app->mlx, app->width, app->height);
+	app->img->addr = mlx_get_data_addr(app->img->img,
+			&(app->img->bits_per_pixel), &(app->img->line_length),
+			&(app->img->endian));
 	mlx_hook(app->win, 17, 0, close_window, app);
 	mlx_hook(app->win, 2, 1L << 0, key_pressed_hook, app);
 	mlx_hook(app->win, 4, 1L << 2, ft_mouse_press, app);
 	mlx_hook(app->win, 6, 1L << 6, ft_mouse_move, app);
 	mlx_hook(app->win, 5, 1L << 3, ft_mouse_release, app);
 	mlx_loop_hook(app->mlx, loop_hook, app);
-	app->img->img = mlx_new_image(app->mlx, app->width, app->height);
-	app->img->addr = mlx_get_data_addr(app->img->img,
-			&(app->img->bits_per_pixel), &(app->img->line_length),
-			&(app->img->endian));
 	return (app);
 }
 
@@ -81,6 +81,5 @@ int	main(int argc, char const *argv[])
 		exit_program(NULL, "Error reading map from file");
 	app = init_app(map, (char *)argv[1]);
 	mlx_loop(app->mlx);
-	app->free(app);
 	return (0);
 }
