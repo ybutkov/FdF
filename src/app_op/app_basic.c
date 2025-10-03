@@ -6,7 +6,7 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 18:44:10 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/10/03 12:32:20 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/10/03 18:49:57 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 static void	print_info_line(t_app *app, int y, char *label1, char *label2)
 {
 	mlx_string_put(app->mlx, app->win, 50, y, COLOR_CYAN, label1);
-	mlx_string_put(app->mlx, app->win, 200, y, COLOR_WHITE, label2);
+	mlx_string_put(app->mlx, app->win, 190, y, COLOR_WHITE, label2);
 }
 
 static void	print_double_value(t_app *app, int x, int y, double value)
@@ -33,22 +33,22 @@ static void	print_double_value(t_app *app, int x, int y, double value)
 void	print_info_panel(t_app *app)
 {
 	mlx_string_put(app->mlx, app->win, 20, 70, COLOR_NEON_LIME, "ROTATION");
-	print_info_line(app, 100, "Rotation X:", "W / S        (Mouse middle)");
-	print_double_value(app, 150, 100, app->map->rotation_x);
-	print_info_line(app, 130, "Rotation Y:", "A / D        (Mouse right)");
-	print_double_value(app, 150, 130, app->map->rotation_y);
+	print_info_line(app, 100, "Rotation X:", "W / S          (Mouse middle)");
+	print_double_value(app, 130, 100, app->map->rotation_x);
+	print_info_line(app, 130, "Rotation Y:", "A / D          (Mouse right)");
+	print_double_value(app, 130, 130, app->map->rotation_y);
 	print_info_line(app, 160, "Rotation Z:", "Z / X");
-	print_double_value(app, 150, 160, app->map->rotation_z);
+	print_double_value(app, 130, 160, app->map->rotation_z);
 	mlx_string_put(app->mlx, app->win, 20, 190, COLOR_NEON_LIME, "ZOOM");
 	print_info_line(app, 220, "Zoom:", "+ / -");
-	print_double_value(app, 150, 220, app->map->zoom);
+	print_double_value(app, 130, 220, app->map->zoom);
 	print_info_line(app, 250, "Z Scale:", "Q / E");
-	print_double_value(app, 150, 250, app->map->z_scale);
+	print_double_value(app, 130, 250, app->map->z_scale);
 	mlx_string_put(app->mlx, app->win, 20, 280, COLOR_NEON_LIME, "MOVE");
-	print_info_line(app, 310, "Offset X:", "left / right (Mouse left)");
-	print_double_value(app, 150, 310, app->map->offset_x);
-	print_info_line(app, 340, "Offset Y:", "up / down    (Mouse left)");
-	print_double_value(app, 150, 340, app->map->offset_y);
+	print_info_line(app, 310, "Offset X:", "left / right   (Mouse left)");
+	print_double_value(app, 130, 310, app->map->offset_x);
+	print_info_line(app, 340, "Offset Y:", "up / down      (Mouse left)");
+	print_double_value(app, 130, 340, app->map->offset_y);
 	mlx_string_put(app->mlx, app->win, 20, 370, COLOR_NEON_LIME, "VIEWS");
 	print_info_line(app, 400, "Reset view", "R");
 	print_info_line(app, 430, "Iso view", "I");
