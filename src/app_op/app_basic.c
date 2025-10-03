@@ -6,7 +6,7 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 18:44:10 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/10/01 16:24:04 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/10/03 12:32:20 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 
 static void	print_info_line(t_app *app, int y, char *label1, char *label2)
 {
-	mlx_string_put(app->mlx, app->win, 70, y, COLOR_CYAN, label1);
-	mlx_string_put(app->mlx, app->win, 220, y, COLOR_WHITE, label2);
+	mlx_string_put(app->mlx, app->win, 50, y, COLOR_CYAN, label1);
+	mlx_string_put(app->mlx, app->win, 200, y, COLOR_WHITE, label2);
 }
 
 static void	print_double_value(t_app *app, int x, int y, double value)

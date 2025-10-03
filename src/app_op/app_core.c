@@ -6,7 +6,7 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 15:42:48 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/10/02 17:24:07 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/10/03 16:57:51 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,11 @@ static void	clear_image(t_img *img)
 
 static void	free_app(t_app *app)
 {
-	if (!app)
+	static int	already_freed = 0;
+
+	if (!app || already_freed)
 		return ;
+	already_freed = 1;
 	if (app->img)
 	{
 		if (app->img->img)
@@ -71,7 +74,7 @@ static void	free_app(t_app *app)
 		app->map->free(app->map);
 	if (app->mlx)
 	{
-		mlx_destroy_display(app->mlx);
+		ft_mlx_destroy_display(app->mlx);
 		free(app->mlx);
 	}
 	if (app->key_actions)

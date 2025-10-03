@@ -6,7 +6,7 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 15:04:53 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/28 15:22:59 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/10/03 16:26:50 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ void	ft_mlx_pixel_put(t_img *img, t_point_2d point)
 	{
 		dst = img->addr + (point.y * img->line_length + point.x
 				* (img->bits_per_pixel / 8));
-		*(unsigned int *)dst = point.color;
+		dst[0] = (point.color) & 0xFF;
+		dst[1] = (point.color >> 8) & 0xFF;
+		dst[2] = (point.color >> 16) & 0xFF;
+		dst[3] = 0;
 	}
 }

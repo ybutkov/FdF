@@ -1,20 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_sign.c                                          :+:      :+:    :+:   */
+/*   app_core_2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/21 16:03:07 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/09/21 16:03:20 by ybutkov          ###   ########.fr       */
+/*   Created: 2025/10/03 17:02:39 by ybutkov           #+#    #+#             */
+/*   Updated: 2025/10/03 17:03:16 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_sign(int x)
+#include <mlx.h>
+
+#ifdef __linux__
+
+void	ft_mlx_destroy_display(void *mlx)
 {
-	if (x > 0)
-		return (1);
-	if (x < 0)
-		return (-1);
-	return (0);
+	mlx_destroy_display(app->mlx);
 }
+
+#else
+
+void	ft_mlx_destroy_display(void *mlx)
+{
+	(void)mlx;
+	return ;
+}
+#endif

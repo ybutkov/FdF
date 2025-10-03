@@ -6,16 +6,16 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 14:04:15 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/10/01 18:43:59 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/10/03 12:29:47 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include "get_next_line.h"
+#include "libft.h"
 #include "map.h"
 #include "parcer.h"
-#include "get_next_line.h"
 #include "stack_base.h"
-#include "libft.h"
 #include <fcntl.h>
 #include <math.h>
 #include <stdio.h>
@@ -63,7 +63,8 @@ t_point	parse_point(char *data)
 		free(parts[1]);
 	}
 	else
-		point.color = base_to_long(COLOR_DEFAULT + 2, "0123456789ABCDEF");
+		point.color = base_to_long((char *)COLOR_DEFAULT + 2,
+				"0123456789ABCDEF");
 	free(parts);
 	return (point);
 }
