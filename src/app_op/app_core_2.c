@@ -6,7 +6,7 @@
 /*   By: ybutkov <ybutkov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 17:02:39 by ybutkov           #+#    #+#             */
-/*   Updated: 2025/10/03 17:03:16 by ybutkov          ###   ########.fr       */
+/*   Updated: 2025/10/03 17:41:02 by ybutkov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 void	ft_mlx_destroy_display(void *mlx)
 {
-	mlx_destroy_display(app->mlx);
+	mlx_destroy_display(mlx);
 }
 
 #else
